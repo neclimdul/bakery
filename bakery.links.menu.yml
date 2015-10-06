@@ -1,0 +1,5 @@
+bakery.settings:
+  title: 'Bakery settings'
+  parent: system.admin_config_system
+  description: 'Infrastructure-wide single-sign-on system options.'
+  route_name: bakery.settings

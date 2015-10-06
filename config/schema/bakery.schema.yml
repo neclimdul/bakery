@@ -1,0 +1,24 @@
+bakery.settings:
+  type: mapping
+  label: Settings
+  mapping:
+    bakery_is_master:
+      type: integer
+    bakery_key:
+      type: string
+    bakery_master:
+      type: string
+    'bakery_slaves:*':
+      type: string
+    bakery_help_text:
+      type: string
+    bakery_freshness:
+      type: string
+    bakery_domain:
+      type: string
+    bakery_loose_ssl:
+      type: boolean
+    bakery_cookie_extension:
+      type: string
+    'bakery_supported_fields:*':
+      type: string

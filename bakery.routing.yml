@@ -1,0 +1,18 @@
+bakery.settings:
+  path: 'admin/config/system/bakery'
+  defaults:
+    titile: 'Bakery'
+    _form: '\Drupal\bakery\Form\BakerySettingsForm'
+  requirements:
+    _permission: 'administer bakery'
+route_callbacks:
+  - "bakery.dynamic_routes::routes"
+
+
+# Slave only
+#bakery.update:
+#  path: bakery/update
+#bakery.repair:
+#  path: bakery/repair
+#bakery.repair:
+#  path: admin/config/people/bakery

@@ -38,13 +38,13 @@ function bakery_schema() {
  * Remove Bakery variables.
  */
 function bakery_uninstall() {
-  variable_del('bakery_key');
-  variable_del('bakery_domain');
-  variable_del('bakery_is_master');
-  variable_del('bakery_master');
-  variable_del('bakery_slaves');
-  variable_del('bakery_supported_fields');
-  variable_del('bakery_help_text');
-  variable_del('bakery_freshness');
-  variable_del('bakery_cookie_extension');
+//  \Drupal::config('bakery.settings')->clear('bakery_key')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_domain')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_is_master')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_master')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_slaves')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_supported_fields')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_help_text')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_freshness')->save();
+//  \Drupal::config('bakery.settings')->clear('bakery_cookie_extension')->save();
 }

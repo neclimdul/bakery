@@ -29,7 +29,11 @@ function bakery_drush_command() {
 }
 
 function drush_bakery_add_slave($slave) {
-  $slaves = variable_get('bakery_slaves', array());
+  // @FIXME
+// Could not extract the default value because it is either indeterminate, or
+// not scalar. You'll need to provide a default value in
+// config/install/bakery.settings.yml and config/schema/bakery.schema.yml.
+$slaves = \Drupal::config('bakery.settings')->get('bakery_slaves');
   $slaves[] = $slave;
-  variable_set('bakery_slaves', $slaves);
+  \Drupal::configFactory()->getEditable('bakery.settings')->set('bakery_slaves', $slaves)->save();
 }

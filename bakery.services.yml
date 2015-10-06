@@ -1,0 +1,35 @@
+---
+services:
+  bakery.dynamic_routes:
+    class: Drupal\bakery\Routing\DynamicRoutes
+    arguments: ['@config.factory']
+  bakery.taste_chocolate_chip_subscriber:
+    class: Drupal\bakery\EventSubscriber\ChocolateChip
+    arguments: ['@url_generator', '@logger.factory', '@config.factory', '@bakery.cookie_kitchen_subscriber']
+    tags:
+      - { name: 'event_subscriber' }
+  bakery.cookie_kitchen_subscriber:
+    class: Drupal\bakery\EventSubscriber\CookieKitchen
+    arguments: ['@url_generator', '@logger.factory']
+    tags:
+      - { name: 'event_subscriber' }
+  bakery.taste_gingerbread_access:
+    class: Drupal\bakery\Access\TasteCookies
+    arguments: ['@config.factory', 'gingerbread']
+    tags:
+      - { name: access_check, applies_to: _bakery_taste_gingerbread }
+  bakery.taste_oatmeal_access:
+    class: Drupal\bakery\Access\TasteCookies
+    arguments: ['@config.factory', 'oatmeal']
+    tags:
+      - { name: access_check, applies_to: _bakery_taste_oatmeal }
+  bakery.taste_thinmint_access:
+    class: Drupal\bakery\Access\TasteCookies
+    arguments: ['@config.factory', 'thinmint']
+    tags:
+      - { name: access_check, applies_to: _bakery_taste_thinmint }
+  bakery.taste_stroopwafel_access:
+    class: Drupal\bakery\Access\TasteCookies
+    arguments: ['@config.factory', 'stroopwafel']
+    tags:
+      - { name: access_check, applies_to: _bakery_taste_stroopwafel }

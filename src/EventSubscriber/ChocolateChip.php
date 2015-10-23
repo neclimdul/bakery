@@ -308,7 +308,7 @@ class ChocolateChip implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events = array();
-//    $events[KernelEvents::REQUEST][] = ['tasteChocolateChip', 20];
+    $events[KernelEvents::REQUEST][] = ['tasteChocolateChip', 20];
     return $events;
   }
 

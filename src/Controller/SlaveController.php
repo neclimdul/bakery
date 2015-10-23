@@ -127,7 +127,7 @@ class SlaveController extends ControllerBase {
         return $this->redirect('<front>');
       }
       else {
-        throw new AccessDeniedHttpException('waaaaaaaatman');
+        throw new AccessDeniedHttpException();
       }
     }
 
@@ -148,6 +148,7 @@ class SlaveController extends ControllerBase {
         drupal_set_message(Xss::filter($errors['name']), 'error');
       }
     }
+
     // Prepare the url options array to pass to drupal_goto().
     $options = array('query' => $cookie['data']['query']);
     if (empty($cookie['data']['destination'])) {

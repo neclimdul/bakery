@@ -9,15 +9,33 @@ namespace Drupal\bakery\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Render\RenderContext;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Routing\UrlGeneratorTrait;
 use Drupal\user\Entity\User;
 use Drupal\user\Form\UserLoginForm;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class MasterController extends ControllerBase {
+
+  protected $renderer;
+
+  public function __construct(RendererInterface $renderer) {
+    $this->renderer = $renderer;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('renderer')
+    );
+  }
 
   public function register(Request $request) {
     $cookie = \Drupal::service('bakery.taste_oatmeal_access')->tasteOatmealCookie($request);
@@ -127,14 +145,18 @@ class MasterController extends ControllerBase {
     // Execute the login form which checks username, password, status and flood.
     $form_state = new FormState();
     $form_state->setValues($cookie['data']);
-    \Drupal::formBuilder()->submitForm(UserLoginForm::class, $form_state);
+    // Work around cacheable response wizardry.
+    $context = new RenderContext();
+    $this->renderer->executeInRenderContext($context, function() use ($form_state) {
+      \Drupal::formBuilder()->submitForm(UserLoginForm::class, $form_state);
+    });
     $errors = $form_state->getErrors();
 
     if (empty($errors)) {
       // Check if account credentials are correct.
       /** @var \Drupal\user\Entity\User $account */
       $account = user_load_by_name($name);
-      if (!$account->id()) {
+      if ($account->id()) {
         // Passed all checks, create identification cookie and log in.
         $init = _bakery_init_field($account->id());
 
@@ -168,6 +190,10 @@ class MasterController extends ControllerBase {
     \Drupal::service('bakery.cookie_kitchen_subscriber')->bakeOatmealCookie($name, $data);
     $response = new TrustedRedirectResponse($cookie['slave'] . 'bakery/login');
     $response->headers->set('test', 'value');
+    // Pass along context from earlier.
+    if (!$context->isEmpty()) {
+      $response->addCacheableDependency($context->pop());
+    }
     return $response;
   }
 

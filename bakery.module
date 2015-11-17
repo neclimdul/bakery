@@ -540,20 +540,9 @@ function bakery_taste_stroopwafel_cookie() {
  * Create a new cookie for identification
  */
 function _bakery_bake_chocolatechip_cookie($name, $mail, $init) {
-
 }
 
 function bakery_taste_oatmeal_cookie() {
-  $key = \Drupal::config('bakery.settings')->get('bakery_key');
-  $type = _bakery_cookie_name('OATMEAL');
-
-  if (!isset($_COOKIE[$type]) || !$key || !\Drupal::config('bakery.settings')->get('bakery_domain')) {
-    return FALSE;
-  }
-  if (($data = bakery_validate_data($_COOKIE[$type], $type)) !== FALSE) {
-    return $data;
-  }
-  return FALSE;
 }
 
 /**
@@ -593,17 +582,6 @@ function bakery_eat_stroopwafel_cookie() {
  * Verify the validation request.
  */
 function bakery_taste_thinmint_cookie() {
-  $type = 'thinmint';
-  if (empty($_POST[$type])) {
-    return FALSE;
-  }
-  if (($cookie = bakery_validate_data($_POST[$type], $type)) === FALSE) {
-    return FALSE;
-  }
-  $_SESSION['bakery']['name'] = $cookie['name'];
-  $_SESSION['bakery']['slave'] = $cookie['slave'];
-  $_SESSION['bakery']['uid'] = $cookie['uid'];
-  return TRUE;
 }
 
 /**

@@ -1,5 +1,5 @@
 bakery.settings:
-  type: mapping
+  type: config_entity
   label: Settings
   mapping:
     bakery_is_master:
@@ -8,8 +8,8 @@ bakery.settings:
       type: string
     bakery_master:
       type: string
-    'bakery_slaves:*':
-      type: string
+    'bakery_slaves':
+      type: sequence
     bakery_help_text:
       type: string
     bakery_freshness:
@@ -20,5 +20,5 @@ bakery.settings:
       type: boolean
     bakery_cookie_extension:
       type: string
-    'bakery_supported_fields:*':
-      type: string
+    'bakery_supported_fields':
+      type: sequence

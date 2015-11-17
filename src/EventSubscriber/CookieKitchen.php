@@ -8,6 +8,7 @@ namespace Drupal\bakery\EventSubscriber;
 
 use Drupal\Core\Routing\UrlGeneratorTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,7 +116,12 @@ class CookieKitchen implements EventSubscriberInterface {
       'type' => 'OATMEAL',
     ];
     if (!$config->get('bakery_is_master')) {
-      $cookie_data['save'] = $this->url('<front>', [], ['absolute' => TRUE]);
+      // Do some backflips here to avoid the url generator from bubbling metadata.
+      $cookie_data['save'] = Url::fromRoute('<front>', [], ['absolute' => TRUE])
+        // First, tell it to not collect metadata.
+        ->toString(TRUE)
+        // Then explicitly generate the url, bypassing context metadata.
+        ->getGeneratedUrl();
     }
     $this->bakeCookie('OATMEAL', $cookie_data);
   }

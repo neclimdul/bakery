@@ -417,10 +417,9 @@ function _bakery_login_submit($form, FormStateInterface $form_state) {
   // Create cookie and redirect to master.
   bakery_bake_oatmeal_cookie($data['name'], $data);
   $url = \Drupal::config('bakery.settings')->get('bakery_master') . '/bakery/login';
-  // This doesn't allow remote redirects. https://www.drupal.org/node/2599342
-  // $form_state->setRedirectUrl(\Drupal\Core\Url::fromUri($url));
-  // Cheaty workaround.
-  $form_state->setFormState(['redirect' => new TrustedRedirectResponse($url)]);
+  // We need to override the normal redirect logic with a TrustedRedirect to
+  // allow us to redirect to an external site.
+  $form_state->setResponse(new TrustedRedirectResponse($url));
 }
 
 function bakery_register_return() {

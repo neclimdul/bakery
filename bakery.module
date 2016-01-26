@@ -24,7 +24,6 @@ function bakery_translated_menu_link_alter(&$item, $map) {
  */
 function bakery_user_login(UserInterface $account) {
   if (\Drupal::config('bakery.settings')->get('bakery_is_master') && $account->id()) {
-    drupal_set_message('Bake me a cookie!');
     \Drupal::service('bakery.cookie_kitchen_subscriber')->bakeChocolateChipCookie(
       $account->getAccountName(), $account->getEmail(), _bakery_init_field($account->id())
     );

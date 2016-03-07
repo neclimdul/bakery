@@ -107,7 +107,7 @@ function bakery_user_update(UserInterface $account = NULL) {
         }
       }
       catch (\Exception $e) {
-        drupal_set_message($request->getBody());
+        drupal_set_message($e->getMessage());
         // TODO: Roll back the change.
       }
     }
@@ -938,8 +938,8 @@ function bakery_pull_form_validate($form, &$form_state) {
 // Calling _theme() directly can alter the expected output and potentially
 // introduce security issues (see https://www.drupal.org/node/2195739). You
 // should use renderable arrays instead.
-// 
-// 
+//
+//
 // @see https://www.drupal.org/node/2195739
 // form_set_error('name', t('Account !link exists.', array('!link' => theme('username', array('account' => $existing_account)))));
 

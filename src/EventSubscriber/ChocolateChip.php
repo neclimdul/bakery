@@ -172,7 +172,7 @@ class ChocolateChip implements EventSubscriberInterface {
         }
 
         /** @var \Drupal\user\Entity\User $account  */
-        if ($account && $cookie['master'] && $account->id() && !$config->get('bakery_is_master') && $account->get('init') != $cookie['init']) {
+        if ($account && $cookie['master'] && $account->id() && !$config->get('bakery_is_master') && $account->getInitialEmail() != $cookie['init']) {
           // User existed previously but init is wrong. Fix it to ensure account
           // remains in sync.
 
